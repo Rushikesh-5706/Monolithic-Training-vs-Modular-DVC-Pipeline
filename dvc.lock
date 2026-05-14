@@ -1,0 +1,84 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python3 src/prepare.py --input data/adult.csv --output 
+      data/processed.csv
+    deps:
+    - path: data/adult.csv
+      hash: md5
+      md5: 8584a308f3223a39b855d8752d107efc
+      size: 3974461
+    - path: src/prepare.py
+      hash: md5
+      md5: c7dbe01a68c4d3829ef639820fa7d8c8
+      size: 1874
+    outs:
+    - path: data/processed.csv
+      hash: md5
+      md5: 104bbdf238b407f55ee0b75d01f3fd5c
+      size: 3298040
+  featurize:
+    cmd: python3 src/featurize.py --input data/processed.csv --output 
+      data/features.npz
+    deps:
+    - path: data/processed.csv
+      hash: md5
+      md5: 104bbdf238b407f55ee0b75d01f3fd5c
+      size: 3298040
+    - path: src/featurize.py
+      hash: md5
+      md5: 5fa2a761955274ef2997cd698fb22d91
+      size: 3335
+    params:
+      params.yaml:
+        prepare.random_state: 42
+        prepare.test_size: 0.2
+    outs:
+    - path: data/features.npz
+      hash: md5
+      md5: bfcfc3ff3c2b42a972ece47d350e0651
+      size: 415735
+  train:
+    cmd: python3 src/train.py --input data/features.npz --output 
+      models/model.joblib
+    deps:
+    - path: data/features.npz
+      hash: md5
+      md5: bfcfc3ff3c2b42a972ece47d350e0651
+      size: 415735
+    - path: src/train.py
+      hash: md5
+      md5: 7af4b7f373483b5c4270e43a15548e8b
+      size: 2969
+    params:
+      params.yaml:
+        train.max_depth: 10
+        train.model_type: random_forest
+        train.n_estimators: 100
+        train.random_state: 42
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 5f55dab4a427664a12caa5791c1eae1c
+      size: 4862393
+  evaluate:
+    cmd: python3 src/evaluate.py --model models/model.joblib --data 
+      data/features.npz --metrics metrics/scores.json
+    deps:
+    - path: data/features.npz
+      hash: md5
+      md5: bfcfc3ff3c2b42a972ece47d350e0651
+      size: 415735
+    - path: models/model.joblib
+      hash: md5
+      md5: 5f55dab4a427664a12caa5791c1eae1c
+      size: 4862393
+    - path: src/evaluate.py
+      hash: md5
+      md5: f37052f30e13a5528b884624aa553cc9
+      size: 2472
+    outs:
+    - path: metrics/scores.json
+      hash: md5
+      md5: 0cc264d4e0498ea9e303eeeb700c0f89
+      size: 69

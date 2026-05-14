@@ -1,0 +1,35 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.env
+venv/
+ENV/
+env/
+.venv/
+
+# DVC pipeline outputs (versioned by DVC, not Git)
+/data/processed.csv
+/data/features.npz
+/models/
+/metrics/
+
+# Monolithic script artifacts (local outputs)
+model.joblib
+metrics.json
+
+# Benchmark runtime logs
+repro_log.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
