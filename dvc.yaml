@@ -1,6 +1,6 @@
 stages:
   prepare:
-    cmd: python3 src/prepare.py --input data/adult.csv --output data/processed.csv
+    cmd: python src/prepare.py --input data/adult.csv --output data/processed.csv
     deps:
       - src/prepare.py
       - data/adult.csv
@@ -8,7 +8,7 @@ stages:
       - data/processed.csv
 
   featurize:
-    cmd: python3 src/featurize.py --input data/processed.csv --output data/features.npz
+    cmd: python src/featurize.py --input data/processed.csv --output data/features.npz
     deps:
       - src/featurize.py
       - data/processed.csv
@@ -19,7 +19,7 @@ stages:
       - data/features.npz
 
   train:
-    cmd: python3 src/train.py --input data/features.npz --output models/model.joblib
+    cmd: python src/train.py --input data/features.npz --output models/model.joblib
     deps:
       - src/train.py
       - data/features.npz
@@ -33,7 +33,7 @@ stages:
 
   evaluate:
     cmd: >-
-      python3 src/evaluate.py
+      python src/evaluate.py
       --model models/model.joblib
       --data data/features.npz
       --metrics metrics/scores.json
