@@ -139,10 +139,10 @@ Outputs written to:
 - `models/model.joblib` -- serialized model
 - `metrics/scores.json` -- accuracy, AUC, F1 as floating-point values
 
-To run with a different hyperparameter without modifying any file:
+To run a quick experiment with a different hyperparameter without creating a tracked experiment:
 
 ```bash
-docker-compose run --rm app dvc repro --set-param train.n_estimators=200
+docker-compose run --rm app dvc exp run --set-param train.n_estimators=200 --temp
 ```
 
 ---
