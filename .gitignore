@@ -33,3 +33,9 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+# Intermediate experiment output files
+exp_results.json
+exp_results.csv
+exp_md.txt
+exp_table.txt

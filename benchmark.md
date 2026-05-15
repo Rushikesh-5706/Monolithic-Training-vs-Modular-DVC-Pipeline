@@ -19,7 +19,7 @@
 |---|---|---|
 | Full pipeline run time (s) | 6.05 | 5.42 |
 | Re-run time after param change (s) | 1.87 | 2.85 |
-| Iteration speedup (full/partial ratio) | 1.00x | 1.9x |
+| Iteration speedup (full/partial ratio) | 1.00x (no stage caching — always full re-run) | 1.9x |
 | Stages re-executed on param change | 4 of 4 | 2 of 4 |
 | Stages cached on param change | 0 of 4 | 2 of 4 |
 | Experiment tracking | Manual (shell loops + CSV) | Built-in (dvc exp show) |
@@ -55,7 +55,7 @@ All experiments share the same prepare and featurize outputs from the cache.
 | exp-depth5 | 100 | 5 | 0.843693 | 0.900047 | 0.754993 |
 | exp-depth20 | 100 | 20 | 0.859606 | 0.911582 | 0.799665 |
 
-Fill all metric values from the output of `dvc exp show`.
+
 
 ---
 

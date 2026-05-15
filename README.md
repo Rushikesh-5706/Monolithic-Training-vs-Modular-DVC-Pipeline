@@ -47,45 +47,33 @@ The DVC pipeline forms a directed acyclic graph (DAG) with four stages.
 Each stage declares its dependencies explicitly. DVC re-runs a stage only
 when its declared inputs change.
 
-```mermaid
-flowchart TD
-    %% Styling
-    classDef data fill:#e1f5fe,stroke:#01579b,stroke-width:2px,color:#000,rx:5px,ry:5px
-    classDef code fill:#f3e5f5,stroke:#4a148c,stroke-width:2px,color:#000,rx:5px,ry:5px
-    classDef model fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px,color:#000,rx:5px,ry:5px
-    classDef config fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000,rx:5px,ry:5px
-
-    %% Nodes
-    raw_data[("📄 data/adult.csv")]:::data
-    processed_data[("📄 data/processed.csv")]:::data
-    features_data[("📄 data/features.npz")]:::data
-    model_artifact[("🧠 models/model.joblib")]:::model
-    metrics_file[("📊 metrics/scores.json")]:::data
-    params[("⚙️ params.yaml")]:::config
-    
-    subgraph DVC Pipeline Stages
-        direction TB
-        prepare["src/prepare.py"]:::code
-        featurize["src/featurize.py"]:::code
-        train["src/train.py"]:::code
-        evaluate["src/evaluate.py"]:::code
-    end
-
-    %% Connections
-    raw_data -->|deps| prepare
-    prepare -->|outs| processed_data
-    
-    processed_data -->|deps| featurize
-    params -.->|params| featurize
-    featurize -->|outs| features_data
-    
-    features_data -->|deps| train
-    params -.->|params| train
-    train -->|outs| model_artifact
-    
-    features_data -->|deps| evaluate
-    model_artifact -->|deps| evaluate
-    evaluate -->|metrics| metrics_file
+```
+data/adult.csv
+      |
+      v
+  [prepare]  ---- src/prepare.py
+      |
+      v
+ data/processed.csv
+      |
+      v
+ [featurize] ---- src/featurize.py
+      |            params.yaml (prepare.*)
+      v
+ data/features.npz
+      |
+      +-----------> [train] ---- src/train.py
+      |                 |         params.yaml (train.*)
+      |                 v
+      |         models/model.joblib
+      |                 |
+      +-----------------+
+                        |
+                        v
+                  [evaluate] ---- src/evaluate.py
+                        |
+                        v
+               metrics/scores.json
 ```
 
 When `train.n_estimators` changes in `params.yaml`, only the `train` and

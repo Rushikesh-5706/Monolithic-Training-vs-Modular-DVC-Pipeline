@@ -1,8 +1,4 @@
 [core]
     remote = storage
-    autostage = true
-[cache]
-    dir = /Users/rushikesh/Monolithic Training vs Modular DVC Pipeline/.dvc/cache
-    type = "hardlink,symlink,copy"
 ['remote "storage"']
-    url = /Users/rushikesh/Monolithic Training vs Modular DVC Pipeline/dvc-remote
+    url = /root/dvc-remote
