@@ -29,6 +29,18 @@
 
 ---
 
+## Per-Stage Timing Breakdown
+
+The following stage times are derived from the DVC benchmark runs. The DVC re-run time of 2.85 seconds reflects train and evaluate only (prepare and featurize were served from cache). The difference between full DVC run and re-run time gives the combined prepare and featurize duration.
+
+| Stage Group | Approximate Duration (s) | Notes |
+|---|---|---|
+| prepare + featurize | 2.57 | Full run (5.42s) minus re-run (2.85s) |
+| train + evaluate | 2.85 | Confirmed by partial re-run timing |
+| Total (DVC pipeline) | 5.42 | Full end-to-end measured time |
+
+Caching prepare and featurize saves approximately 2.57 seconds per experiment iteration. The monolithic script re-runs all equivalent logic on every execution, with no stage-level caching available.
+
 ## Model Metrics (Baseline: n_estimators=100, max_depth=10)
 
 | Metric | Monolithic Script | DVC Pipeline |
