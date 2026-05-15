@@ -12,12 +12,12 @@ echo "[1/3] Running full pipeline to warm DVC cache..."
 dvc repro
 echo "Full pipeline complete."
 
-# Step 2: Modify the n_estimators hyperparameter in the train section
+# Step 2: Modify the n_estimators hyperparameter in the train section.
 # This change affects only the train and evaluate stages.
 # The prepare and featurize stages have no dependency on this parameter.
 echo ""
 echo "[2/3] Modifying params.yaml: setting train.n_estimators from 100 to 200..."
-perl -pi -e 's/n_estimators: 100/n_estimators: 200/' params.yaml
+sed -i 's/n_estimators: 100/n_estimators: 200/' params.yaml
 echo "Modification applied:"
 grep "n_estimators" params.yaml
 
@@ -57,7 +57,7 @@ else
 fi
 
 # Restore original params.yaml
-perl -pi -e 's/n_estimators: 200/n_estimators: 100/' params.yaml
+sed -i 's/n_estimators: 200/n_estimators: 100/' params.yaml
 dvc repro
 echo ""
 echo "params.yaml restored to original state (n_estimators: 100)"
