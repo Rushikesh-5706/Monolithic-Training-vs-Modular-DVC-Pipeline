@@ -55,8 +55,6 @@ All experiments share the same prepare and featurize outputs from the cache.
 | exp-depth5 | 100 | 5 | 0.843693 | 0.900047 | 0.754993 |
 | exp-depth20 | 100 | 20 | 0.859606 | 0.911582 | 0.799665 |
 
-
-
 ---
 
 ## Analysis
