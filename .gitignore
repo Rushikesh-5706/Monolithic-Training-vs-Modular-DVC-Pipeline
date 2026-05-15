@@ -39,3 +39,7 @@ exp_results.json
 exp_results.csv
 exp_md.txt
 exp_table.txt
+exp.csv
+
+# Local DVC remote storage
+dvc-remote/
