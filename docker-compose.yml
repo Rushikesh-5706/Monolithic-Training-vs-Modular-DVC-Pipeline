@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   app:
     image: rushi5706/mlops-pipeline:latest
